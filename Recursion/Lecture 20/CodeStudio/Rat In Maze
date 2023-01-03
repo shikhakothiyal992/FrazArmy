@@ -1,0 +1,55 @@
+import java.util.* ;
+import java.*; 
+public class Solution {
+    public static ArrayList < String > findSum(int[][] arr, int n) {
+        // Write your code here.
+        ArrayList<String> ans=new ArrayList<>() ;
+        String path="" ;
+       help(0 , 0 , n , arr , path , ans) ;
+        return ans ;
+    }
+    public static void help(int i , int j,int n,int[][] arr, String path , ArrayList<String> ans)
+{
+  
+    if(i < 0 || j < 0 || i == n || j == n || arr[i][j] == 0)
+       return ;
+ 
+    else if(i == n - 1 && j == n - 1)
+    {
+        ans.add(new String(path) ) ;
+        return ;
+    }
+ 
+    else 
+    {
+    
+        arr[i][j] = 0 ;
+
+        path += "D";
+        help(i + 1 , j , n , arr , path , ans) ;
+        path = path.substring(0, path.length() - 1);
+
+        // We move in Leftward Direction
+        
+        path += "L";
+        help(i , j - 1 , n , arr , path , ans) ;
+        path = path.substring(0, path.length() - 1);
+        
+        // We move in Rightward Direction
+        
+        path += "R";
+        help(i , j + 1 , n , arr , path , ans) ;
+        path = path.substring(0, path.length() - 1);
+        
+        // We move in Upward Direction
+        
+        path += "U";
+        help(i - 1 , j , n , arr , path , ans) ;
+        path = path.substring(0, path.length() - 1);
+        
+        // After moving in all 4 directions, we need to backtrack and mark the cell again as 1
+        
+        arr[i][j] = 1 ;
+    }
+    }
+}
